@@ -1,7 +1,17 @@
 import mongoose from "mongoose";
 
+const getMongoURI = () => {
+  switch (process.env.NODE_ENV) {
+    case "production":
+      return process.env.MONGO_URI_PROD
+    case "development":
+      return process.env.MONGO_URI_DEV
+    default: return;
+  }
+}
+
 export default async () => {
-  const conn = await mongoose.connect(process.env.MONGO_URI, {
+  const conn = await mongoose.connect(getMongoURI(), {
     // *** Docs: https://mongoosejs.com/docs/connections.html
     // The new url parser does not support connection strings that do not have a port
     useNewUrlParser: true,
