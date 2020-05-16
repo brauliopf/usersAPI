@@ -1,0 +1,9 @@
+# React files
+node_modules
+package-lock.json
+.eslintrc.js
+
+# Custom files
+config/config.env
+config/tmg-brauliopf.pem
+_data
