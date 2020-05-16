@@ -4,6 +4,9 @@ package-lock.json
 .eslintrc.js
 
 # Custom files
-config/config.env
-config/tmg-brauliopf.pem
 _data
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
