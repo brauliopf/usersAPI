@@ -124,7 +124,7 @@ UserSchema.pre('save', async function (next) {
 
   // if provided picture on signup, do not use default avatar
   this.picture !== undefined ? next() :
-    this.picture = `https://train-my-game.s3.us-east-2.amazonaws.com/${`avatar/default/male/0${Math.floor(Math.random() * Math.floor(4)) + 1}.png`}`;
+    this.picture = `https://train-my-game.s3.us-east-2.amazonaws.com/${`avatar/default/0${Math.floor(Math.random() * Math.floor(4)) + 1}.png`}`;
 
   next();
 });
