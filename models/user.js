@@ -42,6 +42,9 @@ const UserSchema = new mongoose.Schema({
       select: false
     }
   },
+  picture: {
+    type: String
+  },
   athlete: {
     sport: { type: String, enum: ['lacrosse'], required: (this.athlete && this.athlete.type) },
     type: {
@@ -68,14 +71,15 @@ const UserSchema = new mongoose.Schema({
     gender: { type: String, enum: ['male', 'female'], default: undefined },
     college: { type: String },
     team: { type: String },
-    experiences: {
-      type: [Map],
-      default: undefined,
-      validate: [(val) => val.reduce((typeChecker, curr) => typeChecker && ["pro", "college", "highSchool"].includes(curr.get("type")), true), `Experience type must be 'pro', 'college' or 'highSchool'.`]
-    },
-    experienceTime: {
-      men: { type: Number },
-      women: { type: Number }
+    experience: {
+      experiences: {
+        type: [Map],
+        default: undefined,
+        validate: [(val) => val.reduce((typeChecker, curr) => typeChecker && ["pro", "college", "highSchool"].includes(curr.get("type")), true), `Experience type must be 'pro', 'college' or 'highSchool'.`]
+      },
+      player: Number,
+      coach_men: Number,
+      coach_women: Number
     },
     dob: { // '1988-04-20'
       type: Date,
@@ -97,9 +101,6 @@ const UserSchema = new mongoose.Schema({
       sub: { type: String }
     }
   },
-  picture: {
-    type: String
-  },
   userConfirmedAt: Date,
   resetPasswordToken: String,
   resetPasswordExpire: Date,
@@ -119,13 +120,6 @@ UserSchema.pre('save', async function (next) {
 });
 
 UserSchema.pre('save', async function (next) {
-
-  if (!this.isModified('picture')) next();
-
-  // if provided picture on signup, do not use default avatar
-  this.picture !== undefined ? next() :
-    this.picture = `https://train-my-game.s3.us-east-2.amazonaws.com/${`avatar/default/0${Math.floor(Math.random() * Math.floor(4)) + 1}.png`}`;
-
   next();
 });
 

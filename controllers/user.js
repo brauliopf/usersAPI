@@ -35,13 +35,14 @@ export const login = async (req, res, next) => {
 // @route   POST /api/v1/users {email, password}
 // @access  Public
 export const createUser = async (req, res, next) => {
-  const { name, email, password, gender, position, experience, dob } = req.body
+  const { name, email, password, gender, position, experience, dob, picture } = req.body
   const user = await User.create({
-    name, email, password,
+    name, email, password, picture,
     "athlete.gender": gender,
     "athlete.experienceTime.player": experience,
     "athlete.dob": dob,
-    "athlete.position": position
+    "athlete.position": position,
+    "athlete.experience.player": experience
   })
   sendTokenReponse(user, 201, res)
 }
@@ -165,11 +166,18 @@ const mapParams = (oldUser, data) => {
   let user = oldUser
   for (let [key, value] of Object.entries(data)) {
     if (["name", "email", "location", "password", "phone", "picture"].includes(key)) { user[key] = value }
-    else if (key === "menLacrosse" || key === "womenLacrosse") {
-      if (!user.athlete || !user.athlete.experienceTime) user.athlete.experienceTime = {}
-      if (key[0] === "m") user.athlete.experienceTime["men"] = value
-      else user.athlete.experienceTime["women"] = value
+
+    // athlete attributes
+    else if (key === "experiences") {
+      if (!user.athlete || !user.athlete.experience) user.athlete.experience = {}
+      user.athlete.experience.experiences = value
     }
+    else if (key === "menLacrosse" || key === "womenLacrosse") {
+      if (!user.athlete || !user.athlete.experience) user.athlete.experience = {}
+      if (key[0] === "m") user.athlete.experience["coach_men"] = value
+      else user.athlete.experience["coach_women"] = value
+    }
+
     else if (key === "applicationDecision") {
       if (value) {
         user.athlete.coachApplication.approvedAt = Date.now();
@@ -179,6 +187,7 @@ const mapParams = (oldUser, data) => {
         user.athlete.coachApplication.rejectedAt = Date.now();
       }
     }
+
     else {
       if (!user.athlete) user.athlete = {}
       else user.athlete[key] = value
