@@ -54,7 +54,7 @@ export const getSessions = async (req, res, next) => {
     ]
   }
 
-  let sessions = await Session.find(querySessions);
+  let sessions = await Session.find(querySessions).sort('agenda.start').exec();
 
   const reducer = (acc, crr) => {
     if (!acc[`${crr.coach}`]) acc[`${crr.coach}`] = [];

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { timestamp } from './plugins/timestamp'
+import { timestamp } from './plugins'
 
 const MessageSchema = new mongoose.Schema({
 

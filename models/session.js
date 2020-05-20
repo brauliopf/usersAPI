@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-import { timestamp } from "./plugins/timestamp"
+import { timestamp, location } from "./plugins"
 import { User, Chat } from './index'
 
 export const SessionSchema = new mongoose.Schema({
@@ -7,17 +7,6 @@ export const SessionSchema = new mongoose.Schema({
   coach: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   title: { type: String, required: true, default: "Lacrosse Training Session" },
   chat: { type: mongoose.Schema.ObjectId, ref: 'Chat' },
-  location: {
-    street: String,
-    complement: String,
-    city: String,
-    state: String,
-    zipcode: { type: String, required: true },
-    geo: {
-      lat: { type: Number },
-      lon: { type: Number }
-    }
-  },
   ageGroup: {
     min: { type: Number },
     max: { type: Number }
@@ -61,6 +50,7 @@ export const SessionSchema = new mongoose.Schema({
   },
   participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
+SessionSchema.plugin(location);
 SessionSchema.plugin(timestamp);
 
 SessionSchema.pre('save', async function (next) {

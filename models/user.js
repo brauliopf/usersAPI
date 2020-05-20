@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');  // generate token - https://jwt.io/
 const bcrypt = require('bcryptjs');   // encrypt password
-import { timestamp } from "./plugins/timestamp"
+import { timestamp, location } from "./plugins"
 
 const UserSchema = new mongoose.Schema({
 
@@ -29,18 +29,6 @@ const UserSchema = new mongoose.Schema({
   phone: {
     type: String,
     match: [/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/, "Invalid phone number"]
-  },
-  location: {
-    street: String,
-    complement: String,
-    city: String,
-    state: String,
-    zipcode: String,
-    geo: {
-      lat: { type: String },
-      lng: { type: String },
-      select: false
-    }
   },
   picture: {
     type: String
@@ -105,6 +93,7 @@ const UserSchema = new mongoose.Schema({
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
+UserSchema.plugin(location);
 UserSchema.plugin(timestamp);
 
 // executed before save even when payload contains repeated data
