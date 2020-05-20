@@ -1,0 +1,199 @@
+[
+  {
+    "_id": "5e98a879749e7e0b90dc1414",
+    "name": "Coach Account",
+    "email": "coach@gmail.com",
+    "password": "1234",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/5e98a879749e7e0b90dc1414.png",
+    "location": {
+      "city": "Joes",
+      "complement": "66",
+      "street": "Rose",
+      "state": "RI",
+      "zipcode": "04135"
+    },
+    "athlete": {
+      "type": "coach",
+      "coachApplication": {
+        "submittedAt": "2020-05-10",
+        "approvedAt": "2020-05-11"
+      },
+      "experiences": [
+        {
+          "type": "pro"
+        },
+        {
+          "type": "college",
+          "division": "Primary",
+          "varsity": 3
+        }
+      ],
+      "sport": "lacrosse",
+      "gender": "male",
+      "bio": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam praesentium unde, et nulla odio dolore accusamus quisquam neque. Provident autem perferendis id quas beatae voluptates laudantium ullam iste adipisci repudiandae?Velit recusandae.",
+      "video": "https://www.youtube.com/embed/rXjAeIW6SWc?start=18",
+      "position": [
+        "F/O",
+        "GOALIE",
+        "DEF"
+      ],
+      "rating": {
+        "rate": 4.5,
+        "qtyReviews": 30
+      },
+      "team": "Champions",
+      "experienceTime.men": 12,
+      "experienceTime.women": 3,
+      "sessions": [
+        "5e998eb1cb44a62bdb3b2fdf",
+        "5e9a19647ab6313d50bc5f9c",
+        "5ead82aee610fc1974341b32",
+        "5ead82aee610fc1974341b33"
+      ]
+    }
+  },
+  {
+    "_id": "5e98a879749e7e0b90dc1415",
+    "name": "Jerome Thompson",
+    "phone": "857-222-5322",
+    "location": {
+      "city": "Cambridge",
+      "complement": "33",
+      "street": "Chesnut St",
+      "zipcode": "02139"
+    },
+    "dob": "1986-11-21",
+    "email": "jerome@gmail.com",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/5e98a879749e7e0b90dc1415.png",
+    "password": "1234",
+    "athlete": {
+      "type": "coach",
+      "sport": "lacrosse",
+      "gender": "male",
+      "position": [
+        "GOALIE",
+        "MID"
+      ],
+      "bio": "Just a regular guy who likes to play Lacrosse. Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam praesentium unde, et nulla odio dolore accusamus quisquam neque. Provident autem perferendis id quas beatae voluptates laudantium ullam iste adipisci repudiandae?Velit recusandae optio eum, eius, totam accusantium ipsam veniam nisi esse officia hic, ipsum adipisci!",
+      "video": "https://youtu.be/rXjAeIW6SWc?t=14",
+      "rating": {
+        "rate": 3.8,
+        "qtyReviews": 50
+      },
+      "team": "Lions",
+      "experienceTime.men": 50,
+      "experienceTime.women": 60,
+      "sessions": [
+        "5e9a19647ab6313d50bc5f9f"
+      ],
+      "video": "https://www.youtube.com/embed/R1JfH_pM-pg"
+    }
+  },
+  {
+    "_id": "5e98a879749e7e0b90dc1416",
+    "name": "Maggie Johnson",
+    "email": "maggie@gmail.com",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/5e98a879749e7e0b90dc1416.png",
+    "password": "1234",
+    "athlete": {
+      "type": "coach",
+      "sport": "lacrosse",
+      "gender": "female",
+      "bio": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam praesentium unde, et nulla odio dolore accusamus quisquam neque. Provident autem perferendis id quas beatae voluptates laudantium ullam iste adipisci.",
+      "video": "https://youtu.be/rXjAeIW6SWc?t=14",
+      "position": [
+        "LSM/SSDM"
+      ],
+      "rating": {
+        "rate": 5.0,
+        "qtyReviews": 3
+      },
+      "team": "Grandpas",
+      "experienceTime.men": 10,
+      "experienceTime.women": 10
+    }
+  },
+  {
+    "_id": "5ea43590f105a4188358210d",
+    "name": "Kevin Smith",
+    "email": "kevin@gmail.com",
+    "password": "1234",
+    "athlete": {
+      "type": "player",
+      "sport": "lacrosse",
+      "gender": "male",
+      "position": [
+        "MID",
+        "ATT"
+      ],
+      "team": "Lions",
+      "experienceTime.player": 3
+    }
+  },
+  {
+    "_id": "5ea43590f105a41883582115",
+    "name": "Jerry Wiliams",
+    "email": "jerry@gmail.com",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/default/02.png",
+    "password": "1234",
+    "athlete": {
+      "type": "player",
+      "sport": "lacrosse",
+      "gender": "male",
+      "position": [
+        "ATT",
+        "LSM/SSDM"
+      ],
+      "dob": "1986-04-12"
+    }
+  },
+  {
+    "_id": "5ea43590f105a41883582112",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/default/03.png",
+    "name": "Tom Brandy",
+    "email": "tom@gmail.com",
+    "password": "1234"
+  },
+  {
+    "_id": "5ea43590f105a41883582113",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/default/02.png",
+    "name": "Jack Adams",
+    "email": "jack@gmail.com",
+    "password": "1234"
+  },
+  {
+    "_id": "5ea43590f105a41883582114",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/default/01.png",
+    "name": "Greg Harris",
+    "email": "greg@gmail.com",
+    "password": "1234"
+  },
+  {
+    "_id": "5ea43590f105a4188358210e",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/default/04.png",
+    "name": "Ryan Bolin",
+    "email": "ryan@gmail.com",
+    "password": "1234"
+  },
+  {
+    "_id": "5ea43590f105a4188358210f",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/default/03.png",
+    "name": "Sara Kensing",
+    "email": "sara@gmail.com",
+    "password": "1234"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be042",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/default/02.png",
+    "name": "Admin Account",
+    "email": "admin@gmail.com",
+    "password": "1234"
+  },
+  {
+    "_id": "5d7a514b5d2c12c7449be044",
+    "picture": "https://train-my-game-dev.s3.us-east-2.amazonaws.com/avatar/default/01.png",
+    "name": "User Account",
+    "email": "user@gmail.com",
+    "password": "1234"
+  }
+]
