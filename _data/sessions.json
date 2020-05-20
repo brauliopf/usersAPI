@@ -10,8 +10,8 @@
       "state": "MA",
       "zipcode": "02138",
       "geo": {
-        "lat": 42.366,
-        "lng": -71.115
+        "lat": 42.361,
+        "lng": -71.1139
       }
     },
     "capacity": {
@@ -45,8 +45,8 @@
       "complement": "90",
       "zipcode": "02138",
       "geo": {
-        "lat": 42.366,
-        "lng": -31.115
+        "lat": 42.361,
+        "lng": -71.1139
       }
     },
     "capacity": {
@@ -71,8 +71,8 @@
       "complement": "10",
       "zipcode": "60411",
       "geo": {
-        "lat": 42.366,
-        "lng": 11.115
+        "lat": 42.3623,
+        "lng": -71.08486
       }
     },
     "capacity": {
@@ -98,8 +98,8 @@
       "complement": "6041",
       "zipcode": "02136",
       "geo": {
-        "lat": 42.366,
-        "lng": -91.115
+        "lat": 42.3645508,
+        "lng": -71.0195449
       }
     },
     "capacity": {
