@@ -22,10 +22,10 @@ export const login = async (req, res, next) => {
   }
   else {
     user = await User.findOne({ email: email }).select('+password')
-    if (!user) { console.log("User not found"); return res.status(404).json(); }
+    if (!user) { return res.status(404).json({ error: "USER_NOT_FOUND" }); }
 
     const isMatch = await user.matchPassword(password);
-    if (!isMatch) { console.log("Credentials do not match"); return res.status(404).json(); }
+    if (!isMatch) { return res.status(404).json({ error: "INVALID_CREDENTIALS" }); }
   }
 
   sendTokenReponse(user, 200, res);
@@ -43,7 +43,7 @@ export const createUser = async (req, res, next) => {
     "athlete.dob": dob,
     "athlete.position": position,
     "athlete.experience.player": experience
-  })
+  }).catch(err => res.status(400).json({ error: "DUPLICATED_EMAIL" }))
   sendTokenReponse(user, 201, res)
 }
 
@@ -91,7 +91,7 @@ export const coachApplication = async (req, res, next) => {
     // user exists
     if (temp) {
       const isMatch = await temp.matchPassword(req.body.password);
-      if (!isMatch) { console.log("Credentials do not match"); return res.status(404).json("Credentials do not match"); }
+      if (!isMatch) { return res.status(404).json({ error: "INVALID_CREDENTIALS" }); }
       // matched! edit user
       user = mapParams(temp, req.body)
       user.athlete.coachApplication = { submittedAt: Date.now() }
@@ -102,7 +102,9 @@ export const coachApplication = async (req, res, next) => {
     // user does not exist
     user = mapParams({}, req.body)
     user.athlete.coachApplication = { submittedAt: Date.now() }
-    return User.create(user).then(u => sendTokenReponse(u, 201, res))
+    return User.create(user)
+      .then(u => sendTokenReponse(u, 201, res))
+      .catch(err => res.status(400).json)
   }
 
 }
