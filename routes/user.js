@@ -6,7 +6,7 @@ import { authenticate, authorize } from '../middlewares/auth'
 
 // Users API
 userRouter.post("/", wrapAsync(userController.createUser));
-userRouter.post("/public-profiles", wrapAsync(userController.getUsersPublicProfile));
+userRouter.get("/public-profile", wrapAsync(userController.getPublicProfile));
 userRouter.post("/login", wrapAsync(userController.login));
 userRouter.put("/:id", authenticate, wrapAsync(userController.updateUser));
 userRouter.put("/:id/coachApplication", authenticate, authorize("admin"), wrapAsync(userController.replyCoachApplicant));

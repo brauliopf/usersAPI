@@ -33,7 +33,7 @@ export const getSessions = async (req, res, next) => {
   // get coach_id's sessions
   const id = req.params.id
   if (id) {
-    const sessions = await Session.find({ 'coach': id }).populate({ path: 'participants' }).sort('agenda.start').exec();
+    const sessions = await Session.find({ 'coach': id }).sort('agenda.start').exec();
     res.status(200).json({ success: true, count: sessions.length, data: sessions });
   }
 
@@ -70,7 +70,7 @@ export const getSessions = async (req, res, next) => {
 // @route   GET /api/v1/session/:id
 // @access  Public
 export const getSession = async (req, res, next) => {
-  const session = await Session.findById(req.params.id).populate({ path: 'coach' }).populate({ path: 'participants' });
+  const session = await Session.findById(req.params.id).populate({ path: 'participants' });
 
   if (!session) {
     return next(new ErrorResponse(`Session not found with id of ${req.params.id}`, 404));

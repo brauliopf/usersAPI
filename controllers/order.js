@@ -25,6 +25,7 @@ export const createOrder = async (req, res, next) => {
     if (paymentIntent === undefined) paymentIntent = await createPaymentIntent(session.price);
     res.status(200).json({ order_id: order._id, client_secret: paymentIntent.client_secret })
   }
+  // if order does not exist, create a new payment intent
   else {
     paymentIntent = await createPaymentIntent(session.price);
     Order.create({ buyer: req.user._id, session: session._id, price: session.price, status: "open", paymentIntent: paymentIntent.id })
@@ -49,6 +50,6 @@ export const updateOrder = async (req, res, next) => {
 export const getOrders = async (req, res, next) => {
   const orders =
     await Order.find({ buyer: req.user._id })
-      .populate({ path: "session", model: "Session", populate: { path: "participants", model: "User", select: "_id" } });
+      .populate({ path: "session", model: "Session" });
   res.status(200).json(orders)
 }
