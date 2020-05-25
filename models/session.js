@@ -48,7 +48,7 @@ export const SessionSchema = new mongoose.Schema({
       return true;
     }
   },
-  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: undefined }]
 });
 SessionSchema.plugin(location);
 SessionSchema.plugin(timestamp);
