@@ -34,7 +34,7 @@ export const getSessions = async (req, res, next) => {
   const id = req.params.id
   if (id) {
     const sessions = await Session.find({ 'coach': id }).sort('agenda.start').exec();
-    res.status(200).json({ success: true, count: sessions.length, data: sessions });
+    return res.status(200).json({ success: true, count: sessions.length, data: sessions });
   }
 
   // search sessions
