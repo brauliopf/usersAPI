@@ -1,11 +1,17 @@
 import { Chat, Message } from '../models';
 
+// @desc    Get chats for a specific user
+// @route   GET /api/v1/chats
+// @access  Private
 export const getChats = async (req, res, next) => {
   Chat.find({ users: req.user._id, targetType: 'User' }).populate({ path: 'users', select: 'name' })
     .then(chats => res.status(200).json({ success: true, data: chats }))
     .catch(err => console.log('Catch error in getChats controller'));
 }
 
+// @desc    Get messages for a specific chat
+// @route   GET /api/v1/chats/:id/messages
+// @access  Public
 export const getChatMessages = async (req, res, next) => {
   const { id } = req.params;
   const user = req.user;

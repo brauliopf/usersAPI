@@ -65,7 +65,7 @@ export const updateUser = async (req, res, next) => {
 // @route   GET /api/v1/users/public-profile
 // @access  Public
 export const getPublicProfile = async (req, res, next) => {
-  User.find({ "_id": { $in: req.query.users.split(",") } }, "name picture")
+  User.find({ "_id": { $in: req.query.users.split(",") } }, "name picture connectedAccounts athlete.rating athlete.bio")
     .then(users => res.status(200).json(convertArrayToObject(users, "_id")))
 }
 

@@ -70,7 +70,7 @@ export const getSessions = async (req, res, next) => {
 // @route   GET /api/v1/session/:id
 // @access  Public
 export const getSession = async (req, res, next) => {
-  const session = await Session.findById(req.params.id).populate({ path: 'participants' });
+  const session = await Session.findById(req.params.id);
 
   if (!session) {
     return next(new ErrorResponse(`Session not found with id of ${req.params.id}`, 404));

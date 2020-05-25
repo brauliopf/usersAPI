@@ -87,6 +87,9 @@ const UserSchema = new mongoose.Schema({
       email: { type: String },
       name: { type: String },
       sub: { type: String }
+    },
+    instagram: {
+      username: { type: String }
     }
   },
   userConfirmedAt: Date,
