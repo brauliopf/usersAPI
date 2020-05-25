@@ -39,8 +39,8 @@ export const createOrder = async (req, res, next) => {
 // @access  Private
 export const updateOrder = async (req, res, next) => {
   Order.findByIdAndUpdate(req.params.id, req.body)
-    .then(res => console.log(res))
-  //     .catch(err => console.log('Catch error in updateOrder controller', err));
+    .then(order => res.status(200).json({ order_id: order._id }))
+    .catch(err => console.log('Catch error in updateOrder controller', err));
   // }
 }
 
