@@ -18,16 +18,20 @@
         "submittedAt": "2020-05-10",
         "approvedAt": "2020-05-11"
       },
-      "experiences": [
-        {
-          "type": "pro"
-        },
-        {
-          "type": "college",
-          "division": "Primary",
-          "varsity": 3
-        }
-      ],
+      "experience": {
+        "experiences": [
+          {
+            "type": "pro"
+          },
+          {
+            "type": "college",
+            "division": "Primary",
+            "varsity": 3
+          }
+        ],
+        "coach_men": 20,
+        "coach_women": 3
+      },
       "sport": "lacrosse",
       "gender": "male",
       "bio": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam praesentium unde, et nulla odio dolore accusamus quisquam neque. Provident autem perferendis id quas beatae voluptates laudantium ullam iste adipisci repudiandae?Velit recusandae.",
@@ -42,8 +46,6 @@
         "qtyReviews": 30
       },
       "team": "Champions",
-      "experienceTime.men": 12,
-      "experienceTime.women": 3,
       "sessions": [
         "5e998eb1cb44a62bdb3b2fdf",
         "5e9a19647ab6313d50bc5f9c",
@@ -84,8 +86,10 @@
         "qtyReviews": 50
       },
       "team": "Lions",
-      "experienceTime.men": 50,
-      "experienceTime.women": 60,
+      "experience": {
+        "coach_men": 50,
+        "coach_women": 60
+      },
       "sessions": [
         "5e9a19647ab6313d50bc5f9f"
       ],
@@ -112,8 +116,10 @@
         "qtyReviews": 3
       },
       "team": "Grandpas",
-      "experienceTime.men": 10,
-      "experienceTime.women": 10
+      "experience": {
+        "coach_men": 10,
+        "coach_women": 8
+      }
     }
   },
   {
@@ -130,7 +136,9 @@
         "ATT"
       ],
       "team": "Lions",
-      "experienceTime.player": 3
+      "experience": {
+        "player": 3
+      }
     }
   },
   {

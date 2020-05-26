@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 import { timestamp, location } from "./plugins"
-import { User, Chat } from './index'
+import { Chat } from './index'
 
 export const SessionSchema = new mongoose.Schema({
 
@@ -48,7 +48,11 @@ export const SessionSchema = new mongoose.Schema({
       return true;
     }
   },
-  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: undefined }]
+  participants: {
+    type: [mongoose.Schema.ObjectId],
+    ref: 'User',
+    default: undefined
+  }
 });
 SessionSchema.plugin(location);
 SessionSchema.plugin(timestamp);

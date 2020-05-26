@@ -1,7 +1,16 @@
-{
-  "session": "5e998eb1cb44a62bdb3b2fdf",
-  "price": 100,
-  "buyer": "5ea43590f105a41883582115",
-  "status": "open",
-  "paymentIntent": "123"
-}
+[
+  {
+    "session": "5e998eb1cb44a62bdb3b2fdf",
+    "price": 100,
+    "buyer": "5ea43590f105a41883582115",
+    "status": "authorized",
+    "paymentIntent": "123A"
+  },
+  {
+    "session": "5e998eb1cb44a62bdb3b2fdf",
+    "price": 90,
+    "buyer": "5ea43590f105a4188358210f",
+    "status": "open",
+    "paymentIntent": "123O"
+  }
+]
