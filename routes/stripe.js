@@ -8,5 +8,6 @@ stripeRouter.get("/public-key", (req, res, next) => {
 
 // https://stripe.com/docs/api/events/types
 stripeRouter.post("/webhook", stripeController.webhook);
+stripeRouter.get("/customers/:id", stripeController.getStripeCustomer);
 
 export { stripeRouter };

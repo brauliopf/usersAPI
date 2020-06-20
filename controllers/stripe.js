@@ -1,5 +1,12 @@
 import { Order, Session } from '../models';
 
+export const getStripeCustomer = async (req, res, next) => {
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
+  const cu = await stripe.customers.retrieve(req.params.id)
+  res.status(200).json({ stripeCustomer: cu });
+  return next();
+}
+
 export const webhook = (req, res, next) => {
   const event = req.body;
 

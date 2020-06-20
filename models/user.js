@@ -90,7 +90,8 @@ const UserSchema = new mongoose.Schema({
     },
     instagram: {
       username: { type: String }
-    }
+    },
+    stripeId: String
   },
   userConfirmedAt: Date,
   resetPasswordToken: String,
