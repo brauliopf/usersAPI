@@ -1,10 +1,30 @@
-import { Order, Session } from '../models';
+import { Order, Session, User } from '../models';
 
+// @desc    Retrieve or create a customer in Stripe
+// @route   GET api/v1/stripe/customers/:stripeId
+// @access  Private
 export const getStripeCustomer = async (req, res, next) => {
+  const stripeId = req.params.id;
   const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
-  const cu = await stripe.customers.retrieve(req.params.id)
-  res.status(200).json({ stripeCustomer: cu });
-  return next();
+
+  if (stripeId == "0") {
+    const cu = await stripe.customers.create({
+      email: req.user.email,
+      name: req.user.name,
+      metadata: { "tmgId": req.user.id }
+    }).then(async cu => {
+      await User.findByIdAndUpdate(req.user.id, { stripeId: cu.id })
+      return cu;
+    });
+    res.status(200).json({ stripeCustomer: cu });
+    return next();
+  }
+  else {
+    const cu = await stripe.customers.retrieve(req.params.id)
+    res.status(200).json({ stripeCustomer: cu });
+    return next();
+  }
+
 }
 
 export const webhook = (req, res, next) => {

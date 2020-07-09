@@ -1,12 +1,17 @@
 import { Order, Session } from '../models';
 
-// @desc    Gets an open order for the pair session and user. If order does not exists, creates one
+// @desc    Gets an open order for the pair session and user. If order does not exist, creates one
 // @route   POST /api/v1/sessions/:id/orders
-// @params  { session:ObjectId }
+// @params  { session:ObjectId, stripeCustomer:Object }
 // @access  Private
 export const createOrder = async (req, res, next) => {
   const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
   const session = await Session.findById(req.params.id)
+  const stripeCustomer = req.body.stripeCustomer;
+  const stripeCredit = stripeCustomer.balance
+  const orderTotal = session.price - stripeCredit
+  // orderTotal > 0: charge difference + (charge credit card > charge stripe credit > ok)
+  // orderTotal <= 0: no charge + (charge stripe credit > ok)
 
   async function createPaymentIntent(price) {
     const pi = await stripe.paymentIntents.create({
@@ -17,15 +22,15 @@ export const createOrder = async (req, res, next) => {
     return pi;
   }
 
+  // if order exists, retrieve the existing payment intent and return
   let order = await Order.findOne({ buyer: req.user._id, session: session, status: "open" })
   let paymentIntent = order && await stripe.paymentIntents.retrieve(order.paymentIntent) || undefined
 
-  // if order exists, retrieve the existing intent and return
   if (order) {
     if (paymentIntent === undefined) paymentIntent = await createPaymentIntent(session.price);
     res.status(200).json({ order_id: order._id, client_secret: paymentIntent.client_secret })
   }
-  // if order does not exist, create a new payment intent
+  // if order does not exist, create a new payment intent and return
   else {
     paymentIntent = await createPaymentIntent(session.price);
     Order.create({ buyer: req.user._id, session: session._id, price: session.price, status: "open", paymentIntent: paymentIntent.id })
@@ -38,10 +43,11 @@ export const createOrder = async (req, res, next) => {
 // @route   PUT /api/v1/orders/:id
 // @access  Private
 export const updateOrder = async (req, res, next) => {
+  let order = req.body
+  console.log("updateOrder", order)
   Order.findByIdAndUpdate(req.params.id, req.body)
     .then(order => res.status(200).json({ order_id: order._id }))
     .catch(err => console.log('Catch error in updateOrder controller', err));
-  // }
 }
 
 // @desc    Gets orders purchased by a user account: return session and coach info

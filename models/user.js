@@ -30,6 +30,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     match: [/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/, "Invalid phone number"]
   },
+  stripeId: String,
   picture: {
     type: String
   },
@@ -90,8 +91,7 @@ const UserSchema = new mongoose.Schema({
     },
     instagram: {
       username: { type: String }
-    },
-    stripeId: String
+    }
   },
   userConfirmedAt: Date,
   resetPasswordToken: String,
