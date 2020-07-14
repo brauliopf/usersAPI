@@ -5,7 +5,7 @@ const getMongoURI = () => {
     case "production":
       return process.env.MONGO_URI_PROD
     case "development":
-      return process.env.MONGO_URI_DEV
+      return process.env.TEST_NICK_DEV
     default: return;
   }
 }

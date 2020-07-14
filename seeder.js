@@ -9,7 +9,7 @@ const colors = require('colors');
 const { User, Session, Message, Chat, Order } = require('./models');
 
 // Connect to DB
-mongoose.connect(process.env.MONGO_URI_DEV, {
+let app = mongoose.connect(process.env.TEST_NICK_DEV, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
