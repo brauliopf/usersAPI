@@ -23,6 +23,8 @@ server.use("/api/v1/sessions", routes.sessionRouter);
 server.use("/api/v1/messages", routes.messageRouter);
 server.use("/api/v1/stripe", routes.stripeRouter);
 
+server.get('/', (req, res) => res.send('Hello World!'));
+
 // Set up the error handler middleware
 // A thrown error or passed to next will be handled here
 import { errorHandler } from "./middlewares/errorHandler";
