@@ -5,6 +5,9 @@ const dotenv = require("dotenv").config({ path: "./config/config.env" });
 import colors from "colors";
 import connectDB from "./config/db"
 
+// Configure server environment
+server.set("env", dotenv.NODE_ENV);
+
 // Load middlewares
 import { loadDefaultMiddlewares } from "./middlewares";
 loadDefaultMiddlewares(server);
@@ -23,15 +26,15 @@ server.use("/api/v1/sessions", routes.sessionRouter);
 server.use("/api/v1/messages", routes.messageRouter);
 server.use("/api/v1/stripe", routes.stripeRouter);
 
-server.get('/', (req, res) => res.send('Hello World!'));
-
 // Set up the error handler middleware
 // A thrown error or passed to next will be handled here
 import { errorHandler } from "./middlewares/errorHandler";
 server.use(errorHandler);
+server.use(express.urlencoded({
+	extended: true
+}))
 
 // Run server
 connectDB();
 const port = process.env.PORT || 5000;
-server.set("env", process.env.NODE_ENV);
 server.listen(port, () => console.log(`Server running in ${server.get("env")} mode on port ${port}`.red.bold));
