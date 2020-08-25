@@ -1,28 +1,104 @@
 import { Order, Session, User } from '../models';
 
+export const accountUpdated = async function (req, res) {
+  console.log(req);
+}
+
+export const getAccountLink = async function (req, res) {
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+  const accountLinks = await stripe.accountLinks.create({
+    account: req.params.stripeId,
+    refresh_url: 'http://localhost:3000',
+    return_url: 'http://localhost:3000',
+    type: 'account_onboarding'
+  });
+
+  res.send(accountLinks);
+}
+
+export const generateStripeClient = async function (req, res) {
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+  const userId = req.params.id;
+  const userObj = await User.findById(userId);
+
+  // if the user does not already have an associated Stripe account with us, create one here.
+  if (!userObj.stripeId) {
+    const cu = await stripe.accounts.create({
+      type: 'express',
+      email: userObj.email,
+      capabilities: {
+        transfers: {requested: true}
+      },
+      metadata: {
+        name: userObj.name,
+        tmgId: userId
+      }
+    });
+
+    let user = await User.findByIdAndUpdate(req.params.id, {stripeId: cu.id})
+      .catch(() => {
+        console.log("Unable to update stripeId for user with id " + userId + " at " + Date.now());
+      });
+    res.status(200);
+    res.send(user);
+  }
+}
+
+export const basicCharge = async function postCharge(req, res) {
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+  try {
+    const charge = await stripe.charges.create({
+      amount: req.body.amount,
+      currency: 'usd',
+      source: req.body.stripeToken,
+      receipt_email: req.body.email,
+      transfer_data: {
+        destination: req.params.recipientStripeId
+      }
+    });
+
+    if (!charge) throw new Error('charge unsuccessful')
+
+    res.status(200).json({
+      message: 'charge posted successfully',
+      charge
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
 // @desc    Retrieve or create a customer in Stripe
 // @route   GET api/v1/stripe/customers/:stripeId
 // @access  Private
 export const getStripeCustomer = async (req, res, next) => {
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
   const stripeId = req.params.id;
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
   if (stripeId == "0") {
-    const cu = await stripe.customers.create({
-      email: req.user.email,
-      name: req.user.name,
-      metadata: { "tmgId": req.user.id }
-    }).then(async cu => {
-      await User.findByIdAndUpdate(req.user.id, { stripeId: cu.id })
-      return cu;
-    });
-    res.status(200).json({ stripeCustomer: cu });
-    return next();
+    const cu = await stripe.accounts.create({
+      type: 'express',
+      email: req.body.user.email,
+      capabilities: {
+        transfers: {requested: true}
+      },
+      metadata: { "tmgId": req.user.id, "name": req.user.name },
+    })
+
+    await User.findByIdAndUpdate(req.user.id, { stripeId: cu.id })
+
+    return res.status(200).json({ stripeId: cu.id });
+
   }
   else {
-    const cu = await stripe.customers.retrieve(req.params.id)
-    res.status(200).json({ stripeCustomer: cu });
-    return next();
+    try {
+      const cu = await stripe.customers.retrieve(stripeId)
+      return res.status(200).json({ stripeId: cu.id });
+    } catch (exception) {
+      return res.status(500).body(exception.message);
+    }
   }
 
 }

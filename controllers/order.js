@@ -1,11 +1,23 @@
 import { Order, Session } from '../models';
 
+export const createPaymentIntent = async (req, res) => {
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
+  const paymentIntent = await stripe.paymentIntents.create({
+    //amount: req.body.totalPrice,
+    amount: 100,
+    currency: "usd"
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret
+  });
+}
+
 // @desc    Gets an open order for the pair session and user. If order does not exist, creates one
 // @route   POST /api/v1/sessions/:id/orders
 // @params  { session:ObjectId, stripeCustomer:Object }
 // @access  Private
 export const createOrder = async (req, res, next) => {
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
   const session = await Session.findById(req.params.id)
   const stripeCustomer = req.body.stripeCustomer;
   const stripeCredit = stripeCustomer.balance
