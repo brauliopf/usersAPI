@@ -21,7 +21,10 @@ export default async () => {
     // use native findOneAndUpdate() rather than findAndModify().
     useFindAndModify: false,
     // True to opt in to using the MongoDB driver's new connection management engine.
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    // this setting is used to tell mongoose to return updated data upon an update
+    // rather than the original.
+    returnOriginal: false
   });
 
   console.log(`MongoDB Connected: ${conn.connection.host}`.green.bold);
