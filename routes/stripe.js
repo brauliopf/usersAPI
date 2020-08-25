@@ -9,9 +9,9 @@ stripeRouter.get("/public-key", (req, res, next) => {
 // https://stripe.com/docs/api/events/types
 stripeRouter.post("/webhook", stripeController.webhook);
 stripeRouter.post("/customers/:id", stripeController.getStripeCustomer);
-stripeRouter.post("/charge", stripeController.basicCharge);
+stripeRouter.post("/charge/:recipientStripeId", stripeController.basicCharge);
 stripeRouter.post("/generateStripeClient/:id", stripeController.generateStripeClient);
-stripeRouter.get("/getStateValue", stripeController.getStateValue);
-stripeRouter.get("/connect/oauth", stripeController.stripeRedirect);
+stripeRouter.get("/accountLink/:stripeId", stripeController.getAccountLink);
+stripeRouter.get("/webhooks/account-updated", stripeController.accountUpdated);
 
 export { stripeRouter };

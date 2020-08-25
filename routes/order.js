@@ -3,6 +3,7 @@ const orderRouter = Router({ mergeParams: true });
 import { orderController } from "../controllers";
 import { authenticate } from '../middlewares/auth';
 
+orderRouter.post("/createPaymentIntent", orderController.createPaymentIntent)
 orderRouter.post("/", authenticate, orderController.createOrder)
 orderRouter.put("/:id", authenticate, orderController.updateOrder)
 orderRouter.get("/", authenticate, orderController.getOrders)
