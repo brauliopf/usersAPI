@@ -6,7 +6,7 @@ import colors from "colors";
 import connectDB from "./config/db"
 
 // Configure server environment
-server.set("env", dotenv.NODE_ENV);
+server.set("env", process.env.NODE_ENV);
 
 // Load middlewares
 import { loadDefaultMiddlewares } from "./middlewares";

@@ -8,8 +8,10 @@ const colors = require('colors');
 // Load models
 const { User, Session, Message, Chat, Order } = require('./models');
 
+const mongo_uri = process.env.NODE_ENV == "production" ? process.env.PROD_DATABASE_URL : process.env.DEV_DATABASE_URL;
+
 // Connect to DB
-let app = mongoose.connect(process.env.TEST_NICK_DEV, {
+let app = mongoose.connect(mongo_uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,

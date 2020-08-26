@@ -1,7 +1,8 @@
 import { Order, Session } from '../models';
 
 export const createPaymentIntent = async (req, res) => {
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
+  const stripe = require("stripe")((process.env.NODE_ENV == "production"
+    ? process.env.STRIPE_LIVE_SECRET_KEY : process.env.STRIPE_SECRET_KEY))
   const paymentIntent = await stripe.paymentIntents.create({
     //amount: req.body.totalPrice,
     amount: 100,

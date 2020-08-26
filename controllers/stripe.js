@@ -7,7 +7,8 @@ export const accountUpdated = async function (req, res) {
 export const getAccountLink = async function (req, res) {
   let origin = (process.env.NODE_ENV === 'production') ? process.env.PROD_FE_ORIGIN : process.env.DEV_FE_ORIGIN;
 
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+  const stripe = require("stripe")((process.env.NODE_ENV == "production"
+    ? process.env.STRIPE_LIVE_SECRET_KEY : process.env.STRIPE_SECRET_KEY))
   const accountLinks = await stripe.accountLinks.create({
     account: req.params.stripeId,
     refresh_url: origin,
@@ -20,7 +21,8 @@ export const getAccountLink = async function (req, res) {
 
 export const checkAcctDetailsSubmitted = async function (req, res) {
   console.log("doug dane")
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+  const stripe = require("stripe")((process.env.NODE_ENV == "production"
+    ? process.env.STRIPE_LIVE_SECRET_KEY : process.env.STRIPE_SECRET_KEY))
 
   await stripe.accounts.retrieve(req.params.stripeId).then((person) => {
     res.status(200);
@@ -32,7 +34,8 @@ export const checkAcctDetailsSubmitted = async function (req, res) {
 }
 
 export const generateStripeClient = async function (req, res) {
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+  const stripe = require("stripe")((process.env.NODE_ENV == "production"
+    ? process.env.STRIPE_LIVE_SECRET_KEY : process.env.STRIPE_SECRET_KEY))
   const userId = req.params.id;
   const userObj = await User.findById(userId);
 
@@ -60,7 +63,8 @@ export const generateStripeClient = async function (req, res) {
 }
 
 export const basicCharge = async function postCharge(req, res) {
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+  const stripe = require("stripe")((process.env.NODE_ENV == "production"
+    ? process.env.STRIPE_LIVE_SECRET_KEY : process.env.STRIPE_SECRET_KEY))
   try {
     const charge = await stripe.charges.create({
       amount: req.body.amount,
@@ -89,7 +93,8 @@ export const basicCharge = async function postCharge(req, res) {
 // @route   GET api/v1/stripe/customers/:stripeId
 // @access  Private
 export const getStripeCustomer = async (req, res, next) => {
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+  const stripe = require("stripe")((process.env.NODE_ENV == "production"
+    ? process.env.STRIPE_LIVE_SECRET_KEY : process.env.STRIPE_SECRET_KEY))
   const stripeId = req.params.id;
 
   if (stripeId == "0") {

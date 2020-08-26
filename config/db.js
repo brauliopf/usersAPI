@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 const getMongoURI = () => {
   switch (process.env.NODE_ENV) {
     case "production":
-      return process.env.MONGO_URI_PROD
+      return process.env.PROD_DATABASE_URL
     case "development":
-      return process.env.TEST_NICK_DEV
+      return process.env.DEV_DATABASE_URL
     default: return;
   }
 }

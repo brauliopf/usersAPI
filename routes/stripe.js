@@ -3,7 +3,9 @@ import { stripeController } from "../controllers"
 const stripeRouter = Router({ mergeParams: true });
 
 stripeRouter.get("/public-key", (req, res, next) => {
-  res.send({ publicKey: process.env.STRIPE_PUBLISHABLE_KEY });
+  res.send({ publicKey: (process.env.NODE_ENV == "production" ?
+      process.env.STRIPE_LIVE_PUBLISHABLE_KEY :
+      process.env.STRIPE_PUBLISHABLE_KEY) });
 })
 
 // https://stripe.com/docs/api/events/types
