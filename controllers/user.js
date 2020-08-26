@@ -51,7 +51,7 @@ export const createUser = async (req, res, next) => {
 // req.params: URL params (usually ID) | res.body: JSON object (must sete header)
 // @route   PUT /api/v1/users/:id
 // @access  Private
-export const updateUser = async (req, res, next) => {
+export const updateUser = async (req, res) => {
   const oldUser = await User.findById(req.user.id)
   const user = mapParams(oldUser, req.body)
 
@@ -73,7 +73,8 @@ export const getPublicProfile = async (req, res, next) => {
 // @desc    Create new coach and submit for approval
 // @route   POST /api/v1/users/coach-apply
 // @access  Public
-export const coachApplication = async (req, res, next) => {
+export const coachApplication = async (req, res) => {
+  // TODO: clean up the code that forces an application to insert them as a coach (workaround to Braulio's coach application code)
   let user = {}
 
   // logged in
@@ -81,6 +82,7 @@ export const coachApplication = async (req, res, next) => {
     const oldUser = await User.findById(req.user.id);
     user = mapParams(oldUser, req.body);
     user.athlete.coachApplication = { submittedAt: Date.now() };
+    user.athlete.type = "coach";
     user.save();
     return sendTokenReponse(user, 200, res);
   }
@@ -96,6 +98,7 @@ export const coachApplication = async (req, res, next) => {
       // matched! edit user
       user = mapParams(temp, req.body)
       user.athlete.coachApplication = { submittedAt: Date.now() }
+      user.athlete.type = "coach";
       user.save()
       return sendTokenReponse(user, 200, res);
     }
@@ -103,6 +106,7 @@ export const coachApplication = async (req, res, next) => {
     // user does not exist
     user = mapParams({}, req.body)
     user.athlete.coachApplication = { submittedAt: Date.now() }
+    user.athlete.type = "coach";
     return User.create(user)
       .then(u => sendTokenReponse(u, 201, res))
       .catch(err => res.status(400).json)

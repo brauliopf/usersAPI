@@ -38,7 +38,9 @@ const UserSchema = new mongoose.Schema({
     sport: { type: String, enum: ['lacrosse'], required: (this.athlete && this.athlete.type) },
     type: {
       type: String, enum: ['player', 'coach'], validate: [function (val) {
-        return (val != "coach" || (this.athlete.coachApplication.submittedAt != null && this.athlete.coachApplication.approvedAt != null) || (this.athlete.coachApplication.submittedAt == this.athlete.coachApplication.approvedAt))
+        // TODO: this should go back in place when we begin using coach applications
+        return true
+        //return (val != "coach" || (this.athlete.coachApplication.submittedAt != null && this.athlete.coachApplication.approvedAt != null) || (this.athlete.coachApplication.submittedAt == this.athlete.coachApplication.approvedAt))
       }, "A coach must be approved by admin and have the approval date registered"]
     },
     coachApplication: {
