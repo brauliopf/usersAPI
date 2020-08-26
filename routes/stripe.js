@@ -11,6 +11,7 @@ stripeRouter.post("/webhook", stripeController.webhook);
 stripeRouter.post("/customers/:id", stripeController.getStripeCustomer);
 stripeRouter.post("/charge/:recipientStripeId", stripeController.basicCharge);
 stripeRouter.post("/generateStripeClient/:id", stripeController.generateStripeClient);
+stripeRouter.get("/checkAccountEnabled/:stripeId", stripeController.checkAcctDetailsSubmitted);
 stripeRouter.get("/accountLink/:stripeId", stripeController.getAccountLink);
 stripeRouter.get("/webhooks/account-updated", stripeController.accountUpdated);
 

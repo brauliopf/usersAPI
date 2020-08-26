@@ -5,15 +5,30 @@ export const accountUpdated = async function (req, res) {
 }
 
 export const getAccountLink = async function (req, res) {
+  let origin = (process.env.NODE_ENV === 'production') ? process.env.PROD_FE_ORIGIN : process.env.DEV_FE_ORIGIN;
+
   const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
   const accountLinks = await stripe.accountLinks.create({
     account: req.params.stripeId,
-    refresh_url: 'http://localhost:3000',
-    return_url: 'http://localhost:3000',
+    refresh_url: origin,
+    return_url: origin,
     type: 'account_onboarding'
   });
 
   res.send(accountLinks);
+}
+
+export const checkAcctDetailsSubmitted = async function (req, res) {
+  console.log("doug dane")
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+  await stripe.accounts.retrieve(req.params.stripeId).then((person) => {
+    res.status(200);
+    res.send(person.details_submitted)
+  }).catch((err) => {
+      res.status(201);
+      res.send(err);
+  })
 }
 
 export const generateStripeClient = async function (req, res) {
@@ -35,7 +50,7 @@ export const generateStripeClient = async function (req, res) {
       }
     });
 
-    let user = await User.findByIdAndUpdate(req.params.id, {stripeId: cu.id})
+    let user = await User.findByIdAndUpdate(req.params.id, {stripeId: cu.id}, {new: true})
       .catch(() => {
         console.log("Unable to update stripeId for user with id " + userId + " at " + Date.now());
       });
