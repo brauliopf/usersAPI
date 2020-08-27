@@ -7,6 +7,8 @@ export const accountUpdated = async function (req, res) {
 export const getAccountLink = async function (req, res) {
   let origin = (process.env.NODE_ENV === 'production') ? process.env.PROD_FE_ORIGIN : process.env.DEV_FE_ORIGIN;
 
+  console.log(process.env.NODE_ENV);
+
   const stripe = require("stripe")((process.env.NODE_ENV == "production"
     ? process.env.STRIPE_LIVE_SECRET_KEY : process.env.STRIPE_SECRET_KEY))
   const accountLinks = await stripe.accountLinks.create({
@@ -20,7 +22,6 @@ export const getAccountLink = async function (req, res) {
 }
 
 export const checkAcctDetailsSubmitted = async function (req, res) {
-  console.log("doug dane")
   const stripe = require("stripe")((process.env.NODE_ENV == "production"
     ? process.env.STRIPE_LIVE_SECRET_KEY : process.env.STRIPE_SECRET_KEY))
 
