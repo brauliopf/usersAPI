@@ -31,6 +31,10 @@ export const SessionSchema = new mongoose.Schema({
     type: Map,
     of: String
   },
+  notes: {
+    type: String,
+    required: true
+  },
   discountTier: { // {number of buyers: price after discount} => {5: 40, 8: 35, 10: 30}
     type: Map,
     of: Number,
