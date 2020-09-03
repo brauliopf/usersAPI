@@ -14,7 +14,7 @@ export const getAccountLink = async function (req, res) {
     refresh_url: origin,
     return_url: origin,
     type: 'account_onboarding'
-  });
+  }).catch((err) => console.log(err));
 
   res.send(accountLinks);
 }
