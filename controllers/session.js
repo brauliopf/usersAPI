@@ -8,19 +8,20 @@ import mongoose from 'mongoose'
 export const createSession = async (req, res, next) => {
   const { title, location, date, start_time, end_time, price, max_participants, notes } = req.body;
   const coach = req.user && req.user._id
+  const adjustedPrice = price * 100;
   const timezoneOffset = 0
   const dateAsArray = date.split("-");
   // the 1th element of this array represents the month
   // months begin at 0 in the javascript Dates world
   dateAsArray[1] = (dateAsArray[1] - 1).toString();
 
-  let session = { coach, title, location, agenda: { date: date, start: start_time, end: end_time, timezoneOffset }, price, capacity: { max: max_participants }, notes }
+  let session = { coach, title, location, agenda: { date: date, start: start_time, end: end_time, timezoneOffset }, price: adjustedPrice, capacity: { max: max_participants }, notes }
 
   // Parse times (EST = UTC + timezoneOffste)
   session.agenda = {
     date: new Date(...dateAsArray, 0, 0, 0, 0),
-    start: new Date(...dateAsArray, ...session.agenda.start.split(":"), 0, 0),
-    end: new Date(...dateAsArray, ...session.agenda.end.split(":"), 0, 0),
+    start: new Date(...dateAsArray, ...start_time.split(":"), 0, 0),
+    end: new Date(...dateAsArray, ...end_time.split(":"), 0, 0),
     timezoneOffset: new Date().getTimezoneOffset()
   }
   session = await Session.create(session);
