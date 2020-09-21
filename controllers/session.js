@@ -2,20 +2,26 @@ import { Session } from '../models';
 import ErrorResponse from "../utils/errorResponse";
 import mongoose from 'mongoose'
 
+export const editSession = (req, res, next) => {
+  console.log(res);
+  if (req.body.title) {
+
+  }
+}
+
 // @desc    Create session
 // @route   POST /api/v1/session
 // @access  Private (admin, coach)
 export const createSession = async (req, res, next) => {
   const { title, location, date, start_time, end_time, price, max_participants, notes } = req.body;
   const coach = req.user && req.user._id
-  const adjustedPrice = price * 100;
   const timezoneOffset = 0
   const dateAsArray = date.split("-");
   // the 1th element of this array represents the month
   // months begin at 0 in the javascript Dates world
   dateAsArray[1] = (dateAsArray[1] - 1).toString();
 
-  let session = { coach, title, location, agenda: { date: date, start: start_time, end: end_time, timezoneOffset }, price: adjustedPrice, capacity: { max: max_participants }, notes }
+  let session = { coach, title, location, agenda: { date: date, start: start_time, end: end_time, timezoneOffset }, price, capacity: { max: max_participants }, notes }
 
   // Parse times (EST = UTC + timezoneOffste)
   session.agenda = {
@@ -86,7 +92,7 @@ export const getSession = async (req, res, next) => {
 // @desc    Update session
 // @route   PUT /api/v1/session/:id
 // @access  Private
-export const updateSession = async (req, res, next) => {
+export const addUserToSession = async (req, res, next) => {
   const session = await Session.findByIdAndUpdate(req.params.id, { $push: { participants: req.body.new_participant } })
 
   if (!session) {
