@@ -7,6 +7,7 @@ import { authenticate } from '../middlewares/auth';
 sessionRouter.post("/", authenticate, sessionController.createSession);
 sessionRouter.get("/", sessionController.getSessions);
 sessionRouter.get("/:id", sessionController.getSession);
-sessionRouter.put("/:id", authenticate, sessionController.updateSession);
+sessionRouter.put("/:id", authenticate, sessionController.addUserToSession);
+sessionRouter.patch("/edit", sessionController.editSession);
 
 export { sessionRouter };
