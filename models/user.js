@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');  // generate token - https://jwt.io/
 const bcrypt = require('bcryptjs');   // encrypt password
 import { timestamp, location } from "./plugins"
+import {Review} from './review'
 
 const UserSchema = new mongoose.Schema({
 
@@ -53,10 +54,6 @@ const UserSchema = new mongoose.Schema({
       enum: ['F/O', 'GOALIE', 'MID', 'ATT', 'DEF', 'LSM/SSDM'],
       required: (this.athlete && this.athlete.type),
       default: undefined
-    },
-    rating: {
-      rate: { type: Number, min: 0, max: 5 },
-      qtyReviews: { type: Number }
     },
     bio: { type: String, maxlength: 400 },
     gender: { type: String, enum: ['male', 'female'], default: undefined },
